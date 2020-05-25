@@ -31,34 +31,37 @@ static unsigned int rows = 24;
 // Import Global Varables::::::::::::::::::::::::::::::::::::::
 #include "../vars.h"
 
-// Mod related defination::::::::::::::::::::::::::::::::::::::
-static uint forcemousemod = ShiftMask;
-#define MODKEY Mod1Mask
-#define TERMMOD (ControlMask|ShiftMask)
 
 // Internal keyboard shortcuts:::::::::::::::::::::::::::::::::
+// (AL: Alt), (CT: Control), (SH: Shift), 
+// (AN: Any), (CS: Control + Shift)
 static Shortcut shortcuts[] = {
-  // Mask        Keysym       Function        Argument
-  { XK_ANY_MOD,  XK_Break,    sendbreak,     {.i =  0} },
-  { ControlMask, XK_Print,    toggleprinter, {.i =  0} },
-  { ShiftMask,   XK_Print,    printscreen,   {.i =  0} },
-  { XK_ANY_MOD,  XK_Print,    printsel,      {.i =  0} },
-  { TERMMOD,     XK_Prior,    zoom,          {.f = +1} },
-  { TERMMOD,     XK_Next,     zoom,          {.f = -1} },
-  { TERMMOD,     XK_Home,     zoomreset,     {.f =  0} },
-  { TERMMOD,     XK_C,        clipcopy,      {.i =  0} },
-  { TERMMOD,     XK_V,        clippaste,     {.i =  0} },
-  { TERMMOD,     XK_Y,        selpaste,      {.i =  0} },
-  { ShiftMask,   XK_Insert,   selpaste,      {.i =  0} },
-  { TERMMOD,     XK_Num_Lock, numlock,       {.i =  0} },
+  //Mask Keysym    Function       Argument
+  { AN,  XK_Print, printsel,      {.i =  0} },
+  { AN,  XK_Break, sendbreak,     {.i =  0} },
+  { CT,  XK_Print, toggleprinter, {.i =  0} },
+  { SH,  XK_Print, printscreen,   {.i =  0} },
+  // Copy and pasting
+  { AL,  XK_c,     clipcopy,      {.i =  0} },
+  { AL,  XK_p,     clippaste,     {.i =  0} },
+  { CS,  XK_P,     clippaste,     {.i =  0} },
+  { CS,  XK_V,     selpaste,      {.i =  0} },
+  { AL,  XK_v,     selpaste,      {.i =  0} },
+  { CS,  XK_C,     clipcopy,      {.i =  0} },
+  { AN,  Button2,  selpaste,      {.i =  0} },
+  // Zooming
+  { CS,  XK_K,     zoom,          {.f = +1} },
+  { CS,  XK_J,     zoom,          {.f = -1} },
+  { CS,  XK_R,     zoomreset,     {.f =  0} },
+  { AL,  XK_r,     zoomreset,     {.f =  0} },
+
 };
   
 // Internal mouse shortcuts::::::::::::::::::::::::::::::::::::
 static MouseShortcut mshortcuts[] = {
   // Mask       Button   Function  Argument  Release
-  { XK_ANY_MOD, Button2, selpaste, {.i = 0},   1 },
-  { XK_ANY_MOD, Button4, ttysend,  {.s = "\031"} },
-  { XK_ANY_MOD, Button5, ttysend,  {.s = "\005"} },
+  { AN, Button4, ttysend,  {.s = "\031"} },
+  { AN, Button5, ttysend,  {.s = "\005"} },
 };
 
 
@@ -70,6 +73,8 @@ static MouseShortcut mshortcuts[] = {
 ///////////// IGNORE, JUST STANDARD VARIABLES::::::::::::::::::
 // Shell
 static char *shell = "/bin/sh";
+// Mod related defination::::::::::::::::::::::::::::::::::::::
+static uint forcemousemod = ShiftMask;
 // Kerning / character bounding-box multipliers
 static float cwscale = 1.0;
 static float chscale = 1.0;
