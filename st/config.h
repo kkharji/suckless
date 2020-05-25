@@ -1,42 +1,42 @@
-// :::::::::::::::::::::::::::::::::::::::::::::::::
-// My St Configuration :::::::::::::::::::::::::::::
-// St Version: st 0.8.3 ::::::::::::::::::::::::::::
-// Author: Tamibam :::::::::::::::::::::::::::::::::
-// repo: github.com/tamibam/suckless :::::::::::::::
-// :::::::::::::::::::::::::::::::::::::::::::::::::
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// My St Configuration ::::::::::::::::::::::::::::::::::::::::
+// St Version: st 0.8.3 :::::::::::::::::::::::::::::::::::::::
+// Author: Tamibam ::::::::::::::::::::::::::::::::::::::::::::
+// repo: github.com/tamibam/suckless ::::::::::::::::::::::::::
+// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-// Border Size::::::::::::::::::::::::::::::::::::::
+// Border Size:::::::::::::::::::::::::::::::::::::::::::::::::
 static int borderpx = 10;
 
-// Cursors :::::::::::::::::::::::::::::::::::::::::
+// Cursors ::::::::::::::::::::::::::::::::::::::::::::::::::::
 static unsigned int cursorthickness = 3;
 // 2:"█", 4:"_", 6:"|"
 static unsigned int cursorshape = 6;
 
-// Scrolling::::::::::::::::::::::::::::::::::::::::
+// Scrolling:::::::::::::::::::::::::::::::::::::::::::::::::::
 char *scroll = NULL;
 char *utmp = NULL;
 
-// Word delimiter string::::::::::::::::::::::::::::
+// Word delimiter string:::::::::::::::::::::::::::::::::::::::
 wchar_t *worddelimiters = L" ";
 
-// Maximum frames per-sec:::::::::::::::::::::::::::
+// Maximum frames per-sec::::::::::::::::::::::::::::::::::::::
 static unsigned int xfps = 120;
 static unsigned int actionfps = 30;
 
-// Default columns and rows numbers:::::::::::::::::
+// Default columns and rows numbers::::::::::::::::::::::::::::
 static unsigned int cols = 80;
 static unsigned int rows = 24;
 
-// Import Global Varables:::::::::::::::::::::::::::
+// Import Global Varables::::::::::::::::::::::::::::::::::::::
 #include "../vars.h"
 
-// Mod related defination:::::::::::::::::::::::::::
+// Mod related defination::::::::::::::::::::::::::::::::::::::
 static uint forcemousemod = ShiftMask;
 #define MODKEY Mod1Mask
 #define TERMMOD (ControlMask|ShiftMask)
 
-// Internal keyboard shortcuts::::::::::::::::::::::
+// Internal keyboard shortcuts:::::::::::::::::::::::::::::::::
 static Shortcut shortcuts[] = {
   // Mask        Keysym       Function        Argument
   { XK_ANY_MOD,  XK_Break,    sendbreak,     {.i =  0} },
@@ -53,7 +53,7 @@ static Shortcut shortcuts[] = {
   { TERMMOD,     XK_Num_Lock, numlock,       {.i =  0} },
 };
   
-// Internal mouse shortcuts:::::::::::::::::::::::::
+// Internal mouse shortcuts::::::::::::::::::::::::::::::::::::
 static MouseShortcut mshortcuts[] = {
   // Mask       Button   Function  Argument  Release
   { XK_ANY_MOD, Button2, selpaste, {.i = 0},   1 },
@@ -61,8 +61,13 @@ static MouseShortcut mshortcuts[] = {
   { XK_ANY_MOD, Button5, ttysend,  {.s = "\005"} },
 };
 
-/* ------ IGNORE, JUST STANDARD VARIABLES ------ */
 
+
+
+
+
+
+///////////// IGNORE, JUST STANDARD VARIABLES::::::::::::::::::
 // Shell
 static char *shell = "/bin/sh";
 // Kerning / character bounding-box multipliers
