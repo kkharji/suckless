@@ -9,10 +9,13 @@ static char *font = "Liberation Mono:pixelsize=21:antialias=true:autohint=true";
 #define CS (ControlMask | ShiftMask)
 #define SS (Mod4Mask | ShiftMask)
 
+// bg opacity
+float alpha = 0.8;           
+
 // ST foreground, 
 unsigned int defaultfg = 7;
 // ST background
-unsigned int defaultbg = 0;
+unsigned int defaultbg = 258;
 // ST Cursor
 static unsigned int defaultcs = 256;
 // ST reverse cursor
@@ -41,4 +44,5 @@ static const char *colorname[] = {
   /* Added after 255 to use with DefaultXX */
   "#cccccc",
   "#555555",
+  "Black"
 };

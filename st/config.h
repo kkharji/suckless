@@ -4,34 +4,17 @@
 // Author: Tamibam ::::::::::::::::::::::::::::::::::::::::::::
 // repo: github.com/tamibam/suckless ::::::::::::::::::::::::::
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-// Border Size:::::::::::::::::::::::::::::::::::::::::::::::::
-static int borderpx = 10;
-
-// Cursors ::::::::::::::::::::::::::::::::::::::::::::::::::::
-static unsigned int cursorthickness = 3;
-// 2:"█", 4:"_", 6:"|"
-static unsigned int cursorshape = 6;
-
-// Scrolling:::::::::::::::::::::::::::::::::::::::::::::::::::
-char *scroll = NULL;
-char *utmp = NULL;
-
-// Word delimiter string:::::::::::::::::::::::::::::::::::::::
-wchar_t *worddelimiters = L" ";
-
-// Maximum frames per-sec::::::::::::::::::::::::::::::::::::::
-static unsigned int xfps = 120;
-static unsigned int actionfps = 30;
-
-// Default columns and rows numbers::::::::::::::::::::::::::::
-static unsigned int cols = 80;
-static unsigned int rows = 24;
-
-// Import Global Varables::::::::::::::::::::::::::::::::::::::
-#include "../vars.h"
-
-
+static int borderpx = 10; // Border Size:::::::::::::::::::::::
+static unsigned int cursorthickness = 3; // Cursors Thickness::
+static unsigned int cursorshape = 6; // 2:"█", 4:"_", 6:"|"::::
+char *scroll = NULL; // Scrolling Op1::::::::::::::::::::::::::
+char *utmp = NULL; // Scrolling Op2::::::::::::::::::::::::::::
+wchar_t *worddelimiters = L" "; // Word delimiter string:::::::
+static unsigned int xfps = 120; // Max frames per-sec::::::::::
+static unsigned int actionfps = 30; // Max frames per-sec::::::
+static unsigned int cols = 80; // Default columns numbers::::::
+static unsigned int rows = 24; // Default Rows number::::::::::
+#include "../vars.h" // Import Global Varables:::::::::::::::::
 // Internal keyboard shortcuts:::::::::::::::::::::::::::::::::
 // (AL: Alt), (CT: Control), (SH: Shift), 
 // (AN: Any), (CS: Control + Shift)
@@ -54,9 +37,7 @@ static Shortcut shortcuts[] = {
   { CS,  XK_J,     zoom,          {.f = -1} },
   { CS,  XK_R,     zoomreset,     {.f =  0} },
   { AL,  XK_r,     zoomreset,     {.f =  0} },
-
 };
-  
 // Internal mouse shortcuts::::::::::::::::::::::::::::::::::::
 static MouseShortcut mshortcuts[] = {
   // Mask       Button   Function  Argument  Release
@@ -69,8 +50,9 @@ static MouseShortcut mshortcuts[] = {
 
 
 
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//:::::::::::: IGNORE, JUST STANDARD VARIABLES:::::::::::::::::
 
-///////////// IGNORE, JUST STANDARD VARIABLES::::::::::::::::::
 // Shell
 static char *shell = "/bin/sh";
 // Mod related defination::::::::::::::::::::::::::::::::::::::
