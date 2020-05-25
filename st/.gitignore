@@ -3,4 +3,4 @@ config.def.h.orig
 st.h.orig
 x.c.orig
 st
-o.x
+x.o
