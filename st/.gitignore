@@ -4,3 +4,6 @@ st.h.orig
 x.c.orig
 st
 x.o
+st.o
+st.c.orig
+config.def.h.rej

@@ -15,34 +15,38 @@ static unsigned int actionfps = 30; // Max frames per-sec::::::
 static unsigned int cols = 80; // Default columns numbers::::::
 static unsigned int rows = 24; // Default Rows number::::::::::
 #include "../vars.h" // Import Global Varables:::::::::::::::::
+#include "../scheme.h" // Import Global Color Scheme::::::::::
 // Internal keyboard shortcuts:::::::::::::::::::::::::::::::::
 // (AL: Alt), (CT: Control), (SH: Shift), 
 // (AN: Any), (CS: Control + Shift)
 static Shortcut shortcuts[] = {
   //Mask Keysym    Function       Argument
-  { AN,  XK_Print, printsel,      {.i =  0} },
-  { AN,  XK_Break, sendbreak,     {.i =  0} },
-  { CT,  XK_Print, toggleprinter, {.i =  0} },
-  { SH,  XK_Print, printscreen,   {.i =  0} },
+  { AN,  XK_Print,  printsel,      {.i =  0} },
+  { AN,  XK_Break,  sendbreak,     {.i =  0} },
+  { CT,  XK_Print,  toggleprinter, {.i =  0} },
+  { SH,  XK_Print,  printscreen,   {.i =  0} },
   // Copy and pasting
-  { AL,  XK_c,     clipcopy,      {.i =  0} },
-  { AL,  XK_p,     clippaste,     {.i =  0} },
-  { CS,  XK_P,     clippaste,     {.i =  0} },
-  { CS,  XK_V,     selpaste,      {.i =  0} },
-  { AL,  XK_v,     selpaste,      {.i =  0} },
-  { CS,  XK_C,     clipcopy,      {.i =  0} },
-  { AN,  Button2,  selpaste,      {.i =  0} },
-  // Zooming
-  { CS,  XK_K,     zoom,          {.f = +1} },
-  { CS,  XK_J,     zoom,          {.f = -1} },
-  { CS,  XK_R,     zoomreset,     {.f =  0} },
-  { AL,  XK_r,     zoomreset,     {.f =  0} },
+  { AL,  XK_c,      clipcopy,      {.i =  0} },
+  { AL,  XK_p,      clippaste,     {.i =  0} },
+  { CS,  XK_P,      clippaste,     {.i =  0} },
+  { CS,  XK_V,      selpaste,      {.i =  0} },
+  { AL,  XK_v,      selpaste,      {.i =  0} },
+  { CS,  XK_C,      clipcopy,      {.i =  0} },
+  { AN,  Button2,   selpaste,      {.i =  0} },
+  // Zooming        
+  { CS,  XK_K,      zoom,          {.f = +1} },
+  { CS,  XK_J,      zoom,          {.f = -1} },
+  { CS,  XK_R,      zoomreset,     {.f =  0} },
+  { AL,  XK_r,      zoomreset,     {.f =  0} },
+  // Scrolling      
+  { CS,  XK_u,      kscrollup,      {.i = -1} },
+  { CS,  XK_d,      kscrolldown,    {.i = -1} },
 };
 // Internal mouse shortcuts::::::::::::::::::::::::::::::::::::
 static MouseShortcut mshortcuts[] = {
   // Mask       Button   Function  Argument  Release
-  { AN, Button4, ttysend,  {.s = "\031"} },
-  { AN, Button5, ttysend,  {.s = "\005"} },
+  { AN,  Button4,   kscrollup,      {.i = 1},      0, /* !alt */ -1 },
+  { AN,  Button5,   kscrolldown,    {.i = 1},      0, /* !alt */ -1 },
 };
 
 
