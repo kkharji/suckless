@@ -28,31 +28,31 @@ static char *copyurl[] = { "/bin/sh", "-c", "tmp=$(sed 's/.*│//g' | tr -d '\n'
 // (AN: Any), (CS: Control + Shift)
 static Shortcut shortcuts[] = {
   //Mask Keysym    Function       Argument
-  { AN,  XK_Print,  printsel,      {.i =  0} },
-  { AN,  XK_Break,  sendbreak,     {.i =  0} },
-  { CT,  XK_Print,  toggleprinter, {.i =  0} },
-  { SH,  XK_Print,  printscreen,   {.i =  0} },
-  // Copy and pasting
-  { AL,  XK_c,      clipcopy,      {.i =  0} },
-  { CS,  XK_V,      clippaste,      {.i =  0} },
-  { AL,  XK_v,      clippaste,      {.i =  0} },
-  { CS,  XK_C,      clipcopy,      {.i =  0} },
-  { AN,  Button2,   clippaste,      {.i =  0} },
-  // Zooming        
-  { AL,  XK_k,      zoom,          {.f = +1} },
-  { AL,  XK_j,      zoom,          {.f = -1} },
-  { AL,  XK_r,      zoomreset,     {.f =  0} },
-  // Scrolling      
-  { AL,  XK_u,      kscrollup,      {.i = -1} },
-  { AL,  XK_d,      kscrolldown,    {.i = -1} },
-  // Custom
-  { CS,  XK_O,      externalpipe,   {.v = copyoutput } },
-	{ CS,  XK_L,      externalpipe,   {.v = openurl } },
-	{ CS,  XK_Y,      externalpipe,   {.v = copyurl } },
-  { AL,  XK_o,      externalpipe,   {.v = copyoutput } },
-	{ AL,  XK_l,      externalpipe,   {.v = openurl } },
-  { AL,  XK_Escape, keyboard_select, { 0 } },
-	{ AL,  XK_y,      externalpipe,   {.v = copyurl } },
+  { AN,  XK_Print,  printsel,         {.i =  0} },
+  { AN,  XK_Break,  sendbreak,        {.i =  0} },
+  { CT,  XK_Print,  toggleprinter,    {.i =  0} },
+  { SH,  XK_Print,  printscreen,      {.i =  0} },
+  // Copy and pasting                 
+  { AL,  XK_c,      clipcopy,         {.i =  0} },
+  { CS,  XK_V,      clippaste,        {.i =  0} },
+  { AL,  XK_v,      clippaste,        {.i =  0} },
+  { CS,  XK_C,      clipcopy,         {.i =  0} },
+  { AN,  Button2,   clippaste,        {.i =  0} },
+  // Zooming                          
+  { AL,  XK_k,      zoom,             {.f = +1} },
+  { AL,  XK_j,      zoom,             {.f = -1} },
+  { AL,  XK_r,      zoomreset,        {.f =  0} },
+  // Scrolling                        
+  { AL,  XK_u,      kscrollup,        {.i = -1} },
+  { AL,  XK_d,      kscrolldown,      {.i = -1} },
+  // Custom                           
+  { CS,  XK_O,      externalpipe,     {.v = copyoutput } },
+	{ CS,  XK_L,      externalpipe,     {.v = openurl } },
+	{ CS,  XK_Y,      externalpipe,     {.v = copyurl } },
+  { AL,  XK_o,      externalpipe,     {.v = copyoutput } },
+	{ AL,  XK_l,      externalpipe,     {.v = openurl } },
+  { AL,  XK_Escape, keyboard_select,  { 0 } },
+	{ AL,  XK_y,      externalpipe,     {.v = copyurl } },
 };
 // Internal mouse shortcuts::::::::::::::::::::::::::::::::::::
 static MouseShortcut mshortcuts[] = {
