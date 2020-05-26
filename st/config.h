@@ -15,7 +15,14 @@ static unsigned int actionfps = 30; // Max frames per-sec::::::
 static unsigned int cols = 80; // Default columns numbers::::::
 static unsigned int rows = 24; // Default Rows number::::::::::
 #include "../vars.h" // Import Global Varables:::::::::::::::::
-#include "../scheme.h" // Import Global Color Scheme::::::::::
+#include "../scheme.h" // Import Global Color Scheme:::::::::::
+// Custom Commands:::::::::::::::::::::::::::::::::::::::::::::
+static char *copyoutput[] = { "/bin/sh", "-c", "sed 's/ssh:\\/\\///g' | st-copyout", "externalpipe", NULL };
+
+static char *openurl[] = { "/bin/sh", "-c", "sed 's/ssh:\\/\\///g' | st-urlhandler", "externalpipe", NULL };
+
+static char *copyurl[] = { "/bin/sh", "-c", "tmp=$(sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./@$&%?$#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed 's/^www./http:\\/\\/www\\./g' ); IFS=; [ ! -z $tmp ] && echo $tmp | dmenu -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard", "externalpipe", NULL };
+
 // Internal keyboard shortcuts:::::::::::::::::::::::::::::::::
 // (AL: Alt), (CT: Control), (SH: Shift), 
 // (AN: Any), (CS: Control + Shift)
@@ -34,13 +41,19 @@ static Shortcut shortcuts[] = {
   { CS,  XK_C,      clipcopy,      {.i =  0} },
   { AN,  Button2,   selpaste,      {.i =  0} },
   // Zooming        
-  { CS,  XK_K,      zoom,          {.f = +1} },
-  { CS,  XK_J,      zoom,          {.f = -1} },
-  { CS,  XK_R,      zoomreset,     {.f =  0} },
+  { AL,  XK_k,      zoom,          {.f = +1} },
+  { AL,  XK_j,      zoom,          {.f = -1} },
   { AL,  XK_r,      zoomreset,     {.f =  0} },
   // Scrolling      
-  { CS,  XK_u,      kscrollup,      {.i = -1} },
-  { CS,  XK_d,      kscrolldown,    {.i = -1} },
+  { AL,  XK_u,      kscrollup,      {.i = -1} },
+  { AL,  XK_d,      kscrolldown,    {.i = -1} },
+  // Custom
+  { CS,  XK_O,      externalpipe,   {.v = copyoutput } },
+	{ CS,  XK_L,      externalpipe,   {.v = openurl } },
+	{ CS,  XK_Y,      externalpipe,   {.v = copyurl } },
+  { AL,  XK_o,      externalpipe,   {.v = copyoutput } },
+	{ AL,  XK_l,      externalpipe,   {.v = openurl } },
+	{ AL,  XK_y,      externalpipe,   {.v = copyurl } },
 };
 // Internal mouse shortcuts::::::::::::::::::::::::::::::::::::
 static MouseShortcut mshortcuts[] = {
@@ -50,22 +63,10 @@ static MouseShortcut mshortcuts[] = {
 };
 
 
-/*
- * 1: render most of the lines/blocks characters without using the font for
- *    perfect alignment between cells (U2500 - U259F except dashes/diagonals).
- *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
- * 0: disable (render all U25XX glyphs normally from the font).
- */
-const int boxdraw = 0;
-const int boxdraw_bold = 0;
-
-/* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
-const int boxdraw_braille = 0;
-
-/*
- * bell volume. It must be a value between -100 and 100. Use 0 for disabling
- * it
- */
+// Draw box settings ::::::::::::::::::::::::::::::::::::::::::
+const int boxdraw = 1;
+const int boxdraw_bold = 1;
+const int boxdraw_braille = 1;
 
 
 
