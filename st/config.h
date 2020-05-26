@@ -34,12 +34,10 @@ static Shortcut shortcuts[] = {
   { SH,  XK_Print,  printscreen,   {.i =  0} },
   // Copy and pasting
   { AL,  XK_c,      clipcopy,      {.i =  0} },
-  { AL,  XK_p,      clippaste,     {.i =  0} },
-  { CS,  XK_P,      clippaste,     {.i =  0} },
-  { CS,  XK_V,      selpaste,      {.i =  0} },
-  { AL,  XK_v,      selpaste,      {.i =  0} },
+  { CS,  XK_V,      clippaste,      {.i =  0} },
+  { AL,  XK_v,      clippaste,      {.i =  0} },
   { CS,  XK_C,      clipcopy,      {.i =  0} },
-  { AN,  Button2,   selpaste,      {.i =  0} },
+  { AN,  Button2,   clippaste,      {.i =  0} },
   // Zooming        
   { AL,  XK_k,      zoom,          {.f = +1} },
   { AL,  XK_j,      zoom,          {.f = -1} },
