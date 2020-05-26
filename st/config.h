@@ -4,26 +4,37 @@
 // Author: Tamibam ::::::::::::::::::::::::::::::::::::::::::::
 // repo: github.com/tamibam/suckless ::::::::::::::::::::::::::
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-static int borderpx = 10; // Border Size:::::::::::::::::::::::
-static unsigned int cursorthickness = 3; // Cursors Thickness::
-static unsigned int cursorshape = 6; // 2:"█", 4:"_", 6:"|"::::
-char *scroll = NULL; // Scrolling Op1::::::::::::::::::::::::::
-char *utmp = NULL; // Scrolling Op2::::::::::::::::::::::::::::
-wchar_t *worddelimiters = L" "; // Word delimiter string:::::::
-static unsigned int xfps = 120; // Max frames per-sec::::::::::
-static unsigned int actionfps = 30; // Max frames per-sec::::::
-static unsigned int cols = 80; // Default columns numbers::::::
-static unsigned int rows = 24; // Default Rows number::::::::::
-#include "../vars.h" // Import Global Varables:::::::::::::::::
-#include "../scheme.h" // Import Global Color Scheme:::::::::::
+
+// Border Size:::::::::::::::::::::::::::::::::::::::::::::::::
+static int borderpx = 10; 
+
+// Cursors Settings::::::::::::::::::::::::::::::::::::::::::::
+static unsigned int cursorthickness = 3; 
+static unsigned int cursorshape = 6;
+
+// Max frames per-sec::::::::::::::::::::::::::::::::::::::::::
+static unsigned int xfps = 120; 
+static unsigned int actionfps = 30;
+
+// Columns and Rows numbers::::::::::::::::::::::::::::::::::::
+static unsigned int cols = 80;
+static unsigned int rows = 24;
+// Imports ::::::::::::::::::::::::::::::::::::::::::::::::::::
+#include "../vars.h" 
+#include "../scheme.h"
+
 // Custom Commands:::::::::::::::::::::::::::::::::::::::::::::
-static char *copyoutput[] = { "/bin/sh", "-c", "sed 's/ssh:\\/\\///g' | st-copyout", "externalpipe", NULL };
+static char *copyoutput[] = { "/bin/sh", "-c", 
+  "sed 's/ssh:\\/\\///g' | st-copyout", "externalpipe", NULL };
 
-static char *openurl[] = { "/bin/sh", "-c", "sed 's/ssh:\\/\\///g' | st-urlhandler", "externalpipe", NULL };
+static char *openurl[] = { "/bin/sh", "-c", 
+  "sed 's/ssh:\\/\\///g' | st-urlhandler", "externalpipe", NULL };
 
-static char *copyurl[] = { "/bin/sh", "-c", "tmp=$(sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./@$&%?$#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed 's/^www./http:\\/\\/www\\./g' ); IFS=; [ ! -z $tmp ] && echo $tmp | dmenu -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard", "externalpipe", NULL };
+static char *copyurl[] = { "/bin/sh", "-c", 
+  "tmp=$(sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./@$&%?$#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed 's/^www./http:\\/\\/www\\./g' ); IFS=; [ ! -z $tmp ] && echo $tmp | dmenu -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard", "externalpipe", NULL };
 
 // Internal keyboard shortcuts:::::::::::::::::::::::::::::::::
+//
 // (AL: Alt), (CT: Control), (SH: Shift), 
 // (AN: Any), (CS: Control + Shift)
 static Shortcut shortcuts[] = {
@@ -47,12 +58,12 @@ static Shortcut shortcuts[] = {
   { AL,  XK_d,      kscrolldown,      {.i = -1} },
   // Custom                           
   { CS,  XK_O,      externalpipe,     {.v = copyoutput } },
-	{ CS,  XK_L,      externalpipe,     {.v = openurl } },
-	{ CS,  XK_Y,      externalpipe,     {.v = copyurl } },
+  { CS,  XK_L,      externalpipe,     {.v = openurl } },
+  { CS,  XK_Y,      externalpipe,     {.v = copyurl } },
   { AL,  XK_o,      externalpipe,     {.v = copyoutput } },
-	{ AL,  XK_l,      externalpipe,     {.v = openurl } },
+  { AL,  XK_l,      externalpipe,     {.v = openurl } },
   { AL,  XK_Escape, keyboard_select,  { 0 } },
-	{ AL,  XK_y,      externalpipe,     {.v = copyurl } },
+  { AL,  XK_y,      externalpipe,     {.v = copyurl } },
 };
 // Internal mouse shortcuts::::::::::::::::::::::::::::::::::::
 static MouseShortcut mshortcuts[] = {
@@ -61,13 +72,26 @@ static MouseShortcut mshortcuts[] = {
   { AN,  Button5,   kscrolldown,    {.i = 1},      0, /* !alt */ -1 },
 };
 
-
 // Draw box settings ::::::::::::::::::::::::::::::::::::::::::
 const int boxdraw = 1;
 const int boxdraw_bold = 1;
 const int boxdraw_braille = 1;
 
+// Auto Sync Settings :::::::::::::::::::::::::::::::::::::::::
+//
+// draw latency range in ms - from new content/keypress/etc until drawing.
+// within this range, st draws when content stops arriving (idle). mostly it's
+// near minlatency, but it waits longer for slow updates to avoid partial draw.
+// low minlatency will tear/flicker more, as it can "detect" idle too early.
+///
+static double minlatency = 8;
+static double maxlatency = 33;
 
+//
+// Synchronized-Update timeout in ms
+// https://gitlab.com/gnachman/iterm2/-/wikis/synchronized-updates-spec
+// 
+static uint su_timeout = 200;
 
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -328,3 +352,6 @@ static char ascii_printable[] =
   "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
   "`abcdefghijklmnopqrstuvwxyz{|}~";
 
+char *scroll = NULL; // Scrolling Op1::::::::::::::::::::::::::
+char *utmp = NULL; // Scrolling Op2::::::::::::::::::::::::::::
+wchar_t *worddelimiters = L" "; // Word delimiter string:::::::
