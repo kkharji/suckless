@@ -51,6 +51,7 @@ static Shortcut shortcuts[] = {
 	{ CS,  XK_Y,      externalpipe,   {.v = copyurl } },
   { AL,  XK_o,      externalpipe,   {.v = copyoutput } },
 	{ AL,  XK_l,      externalpipe,   {.v = openurl } },
+  { AL,  XK_Escape, keyboard_select, { 0 } },
 	{ AL,  XK_y,      externalpipe,   {.v = copyurl } },
 };
 // Internal mouse shortcuts::::::::::::::::::::::::::::::::::::
