@@ -6,10 +6,10 @@
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 // Border Size:::::::::::::::::::::::::::::::::::::::::::::::::
-static int borderpx = 10; 
+static int borderpx = 6; 
 
 // Cursors Settings::::::::::::::::::::::::::::::::::::::::::::
-static unsigned int cursorthickness = 3; 
+static unsigned int cursorthickness = 2; 
 static unsigned int cursorshape = 6;
 
 // Max frames per-sec::::::::::::::::::::::::::::::::::::::::::
@@ -50,12 +50,17 @@ static Shortcut shortcuts[] = {
   { CS,  XK_C,      clipcopy,         {.i =  0} },
   { AN,  Button2,   clippaste,        {.i =  0} },
   // Zooming                          
-  { AL,  XK_k,      zoom,             {.f = +1} },
-  { AL,  XK_j,      zoom,             {.f = -1} },
+  { AL,  XK_l,      zoom,             {.f = +1} },
+  { AL,  XK_h,      zoom,             {.f = -1} },
   { AL,  XK_r,      zoomreset,        {.f =  0} },
+  { CS,  XK_L,      zoom,             {.f = +1} },
+  { CS,  XK_H,      zoom,             {.f = -1} },
+  { CS,  XK_R,      zoomreset,        {.f =  0} },
   // Scrolling                        
-  { AL,  XK_u,      kscrollup,        {.i = -1} },
-  { AL,  XK_d,      kscrolldown,      {.i = -1} },
+  { AL,  XK_k,      kscrollup,        {.i = -1} },
+  { AL,  XK_j,      kscrolldown,      {.i = -1} },
+  { CS,  XK_K,      kscrollup,        {.i = -1} },
+  { CS,  XK_J,      kscrolldown,      {.i = -1} },
   // Custom                           
   { CS,  XK_O,      externalpipe,     {.v = copyoutput } },
   { CS,  XK_L,      externalpipe,     {.v = openurl } },
