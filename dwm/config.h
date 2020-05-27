@@ -26,7 +26,13 @@ static const char *colors[][3]      = { // Colors Setup
   [SchemeInfoNorm]  = { col_foreground,  col_background,   col_background  }, // infobar middle  unselected 
 };
 static const char *tags[] = { "●", "●", "●", "●", "●", "●", "●", "●" };
-
+static const unsigned int baralpha = 0xd0;
+static const unsigned int borderalpha = OPAQUE;
+static const unsigned int alphas[][3]      = {
+  /*               fg      bg        border     */
+  [SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+  [SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+};
 
 // Rules:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 static const float mfact = 0.6;  // Master area size [0.05..0.95]
