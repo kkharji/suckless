@@ -12,7 +12,7 @@
 
 // Appearance::::::::::::::::::::::::::::::::::::::::::::::::::
 static const int showbar            = 1; // Bar? 
-static const int topbar             = 1; // Top?
+static const int topbar             = 0; // Top?
 static const unsigned int borderpx  = 3; // Border
 static const unsigned int snap      = 32; // Snap pixel
 static const char *colors[][3]      = { // Colors Setup
@@ -58,7 +58,9 @@ static const Layout layouts[] = {
 
 // Commands:::::::::::::::::::::::::::::::::::::::::::::::::::::
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
+static const char *dmenucmd[] = { 
+  "dmenu_run", "-m", dmenumon, topbar ? NULL : "-b", NULL 
+};
 static const char *termcmd[]  = { "st", NULL };
 static const char *brightinc[] = { "xbacklight", "-inc", "15", NULL };
 static const char *brightdec[] = { "xbacklight", "-dec", "15", NULL };
