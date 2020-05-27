@@ -12,18 +12,18 @@
 
 // Appearance::::::::::::::::::::::::::::::::::::::::::::::::::
 static const int showbar            = 1; // Bar? 
-static const int topbar             = 0; // Top?
+static const int topbar             = 1; // Top?
 static const unsigned int borderpx  = 3; // Border
 static const unsigned int snap      = 32; // Snap pixel
 static const char *colors[][3]      = { // Colors Setup
-  /*                  fg               bg               border   */
-  [SchemeNorm]      = { col_foreground,  col_background,   col_background },
-  [SchemeSel]       = { col_foreground,  col_blue,         col_blue },
-  [SchemeStatus]    = { col_foreground,  col_background,   col_background  }, // Statusbar right
-  [SchemeTagsSel]   = { col_blue,        col_background,   col_background  }, // Tagbar left selected 
-  [SchemeTagsNorm]  = { col_foreground,  col_background,   col_background  }, // Tagbar left unselected 
-  [SchemeInfoSel]   = { col_blue,        col_background,   col_background  }, // infobar middle  selected
-  [SchemeInfoNorm]  = { col_foreground,  col_background,   col_background  }, // infobar middle  unselected 
+  //                    fg        bg        border
+  [SchemeNorm]      = { col_fg,   col_bg,   col_bg },
+  [SchemeSel]       = { col_fg,   col_blue, col_blue },
+  [SchemeStatus]    = { col_fg,   col_bg,   col_bg  }, // Statusbar right
+  [SchemeTagsSel]   = { col_blue, col_bg,   col_bg  }, // Tagbar left selected 
+  [SchemeTagsNorm]  = { col_fg,   col_bg,   col_bg  }, // Tagbar left unselected 
+  [SchemeInfoSel]   = { col_blue, col_bg,   col_bg  }, // infobar middle  selected
+  [SchemeInfoNorm]  = { col_fg,   col_bg,   col_bg  }, // infobar middle  unselected 
 };
 static const char *tags[] = { "●", "●", "●", "●", "●", "●", "●", "●" };
 static const unsigned int baralpha = 0xd0;
@@ -158,4 +158,3 @@ static Button buttons[] = {
   { ClkTagBar,      SU,        Button1,  tag,            {0} },
   { ClkTagBar,      SU,        Button3,  toggletag,      {0} },
 };
-
