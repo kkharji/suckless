@@ -115,7 +115,7 @@ static int bellvolume = 0;
 // TERM value << only one infact!!
 char *termname = "st-256color";
 // Unknown
-int allowaltscreen = 0;
+int allowaltscreen = 1;
 char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 // Number of space each tab, if changed, change st.info (it)
 unsigned int tabspaces = 8;
