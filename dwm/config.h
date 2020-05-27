@@ -8,10 +8,11 @@
 // Imports:::::::::::::::::::::::::::::::::::::::::::::::::::::
 #include "../vars.h" 
 #include "../scheme.h"
+#include <X11/XF86keysym.h>
 
 // Appearance::::::::::::::::::::::::::::::::::::::::::::::::::
 static const int showbar            = 1; // Bar? 
-static const int topbar             = 1; // Top?
+static const int topbar             = 0; // Top?
 static const unsigned int borderpx  = 3; // Border
 static const unsigned int snap      = 32; // Snap pixel
 static const char *colors[][3]      = { // Colors Setup
@@ -19,7 +20,7 @@ static const char *colors[][3]      = { // Colors Setup
   [SchemeNorm]      = { col_foreground,  col_background,   col_background },
   [SchemeSel]       = { col_foreground,  col_blue,         col_blue },
   [SchemeStatus]    = { col_foreground,  col_background,   col_background  }, // Statusbar right
-  [SchemeTagsSel]   = { col_blue,         col_background,   col_background  }, // Tagbar left selected 
+  [SchemeTagsSel]   = { col_blue,        col_background,   col_background  }, // Tagbar left selected 
   [SchemeTagsNorm]  = { col_foreground,  col_background,   col_background  }, // Tagbar left unselected 
   [SchemeInfoSel]   = { col_blue,        col_background,   col_background  }, // infobar middle  selected
   [SchemeInfoNorm]  = { col_foreground,  col_background,   col_background  }, // infobar middle  unselected 
@@ -41,9 +42,9 @@ static const Rule rules[] = {
 // Layout Symbols:::::::::::::::::::::::::::::::::::::::::::::::
 static const Layout layouts[] = {
   // Symbol Layout 
-  { "[]=",  tile },
-  { "><",   NULL },
-  { "[M]",  monocle },
+  { "|  ",  tile },
+  { "| 缾",   NULL },
+  { "|  ",  monocle },
 };
 
 // Helper for spawning shell commands:::::::::::::::::::::::::::
@@ -53,34 +54,77 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *brightinc[] = { "xbacklight", "-inc", "15", NULL };
+static const char *brightdec[] = { "xbacklight", "-dec", "15", NULL };
+static const char *volumeinc[] = { "pamixer", "--allow-boost", "-i", "5", NULL };
+static const char *volumedec[] = { "pamixer", "--allow-boost", "-d", "5", NULL };
+static const char *mustoggle[] = { "mpc", "toggle", NULL };
+static const char *musfastfo[] = { "mpc", "seek", "+10", NULL };
+static const char *musfastff[] = { "mpc", "seek", "+60", NULL };
+static const char *musfastba[] = { "mpc", "seek", "-10", NULL };
+static const char *musfastbb[] = { "mpc", "seek", "-60", NULL };
+static const char *musgonext[] = { "mpc", "next", NULL };
+static const char *musgoprev[] = { "mpc", "prev", NULL };
+static const char *exoptions[] = { "exoptions", NULL };
+static const char *deconfigs[] = { "editconfig", NULL };
+static const char *displayse[] = { "diselect", NULL };
+static const char *displayon[] = { "disone", NULL };
+static const char *mustuiapp[] = { "st", "-e", "ncmpcpp", NULL };
 
 // Mappings:::::::::::::::::::::::::::::::::::::::::::::::::::::
 static Key keys[] = {
-  /* modifier                     key        function        argument */
-  { SU,   XK_d,        spawn,          {.v = dmenucmd } },
-  { SU,   XK_Return,   spawn,          {.v = termcmd } },
-  { SU,   XK_b,        togglebar,      {0} },
-  { SU,   XK_j,        focusstack,     {.i = +1 } },
-  { SU,   XK_k,        focusstack,     {.i = -1 } },
-  { SU,   XK_o,        incnmaster,     {.i = +1 } },
-  { SS,   XK_o,        incnmaster,     {.i = -1 } },
-  { SU,   XK_h,        setmfact,       {.f = -0.05} },
-  { SU,   XK_l,        setmfact,       {.f = +0.05} },
-  { SU,   XK_Tab,      view,           {0} },
-  { SU,   XK_c,        killclient,     {0} },
-  { SU,   XK_t,        setlayout,      {.v = &layouts[0]} },
-  { SU,   XK_f,        setlayout,      {.v = &layouts[1]} },
-  { SU,   XK_m,        setlayout,      {.v = &layouts[2]} },
-  { SU,   XK_w,        spawn,          SHCMD("$BROWSER") },
-  { SU,   XK_space,    zoom,           {0} },
-  { SS,   XK_space,    togglefloating, {0} },
-  { SU,   XK_0,        view,           {.ui = ~0 } },
-  { SS,   XK_0,        tag,            {.ui = ~0 } },
-  { SU,   XK_comma,    focusmon,       {.i = -1 } },
-  { SU,   XK_period,   focusmon,       {.i = +1 } },
-  { SS,   XK_comma,    tagmon,         {.i = -1 } },
-  { SS,   XK_period,   tagmon,         {.i = +1 } },
-  { SS,   XK_q,        quit,          {0} },
+  // Window Management
+  { SU,   XK_b,             togglebar,      {0} },
+  { SU,   XK_j,             focusstack,     {.i = +1 } },
+  { SU,   XK_k,             focusstack,     {.i = -1 } },
+  { SU,   XK_o,             incnmaster,     {.i = +1 } },
+  { SS,   XK_o,             incnmaster,     {.i = -1 } },
+  { SU,   XK_h,             setmfact,       {.f = -0.05} },
+  { SU,   XK_l,             setmfact,       {.f = +0.05} },
+  { SU,   XK_c,             killclient,     {0} },
+  { SU,   XK_space,         zoom,           {0} },
+  { SS,   XK_space,         togglefloating, {0} },
+  // { SU,   XK_apostrophe,    togglescratch,  {.ui = 1} }, // require defination
+  // Layout Management
+  { SU,   XK_t,             setlayout,      {.v = &layouts[0]} },
+  { SU,   XK_f,             setlayout,      {.v = &layouts[1]} },
+  { SU,   XK_m,             setlayout,      {.v = &layouts[2]} },
+  // Tag/Desktop Managment
+  { SU,   XK_Tab,           view,           {0} },
+  { SU,   XK_0,             view,           {.ui = ~0 } },
+  // { SU,   XK_g,             shiftview,      { .i = -1 } }, // require defination
+  // { SU,   XK_semicolon,     shiftview,      { .i = 1 } }, // require defination
+  { SS,   XK_0,             tag,            {.ui = ~0 } },
+  // Spawns
+  { SU,   XK_d,             spawn,          {.v = dmenucmd } },
+  { SU,   XK_Return,        spawn,          {.v = termcmd } },
+  { SU,   XK_w,             spawn,          SHCMD("$BROWSER") },
+  { SU,   XK_r,             spawn,          SHCMD("$FILE") },
+  // Controls
+  { SU,   XK_equal,         spawn,          {.v = volumeinc } },
+  { SU,   XK_minus,         spawn,          {.v = volumedec } },
+  { SS,   XK_equal,         spawn,          {.v = brightinc } },
+  { SS,   XK_minus,         spawn,          {.v = brightdec } },
+  { SU,   XK_p,             spawn,          {.v = mustoggle } },
+  { SU,   XK_bracketright,  spawn,          {.v = musfastfo } },
+  { SS,   XK_bracketright,  spawn,          {.v = musfastff } },
+  { SU,   XK_bracketleft,   spawn,          {.v = musfastba } },
+  { SS,   XK_bracketleft,   spawn,          {.v = musfastbb } },
+  { SU,   XK_period,        spawn,          {.v = musgonext } },
+  { SU,   XK_comma,         spawn,          {.v = musgoprev } },
+  { SU,   XK_q,             spawn,          {.v = exoptions } },
+  { SU,   XK_BackSpace,     spawn,          {.v = exoptions } },
+  { SU,   XK_backslash,     spawn,          {.v = deconfigs } },
+  { SC,   XK_d,             spawn,          {.v = displayse } },
+  { SC,   XK_s,             spawn,          {.v = displayon } },
+  { SC,   XK_m,             spawn,          {.v = mustuiapp } },
+  { 0,    XK_Print,         spawn,          SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },   
+  { SH,   XK_Print,         spawn,          SHCMD("maimpick") },
+  { SC,   XK_x,             spawn,          SHCMD("slock & xset dpms force off;mpcpause;pauseallmpv") },
+  // { SU,     XK_z,   incrgaps, {.i = +3 } }, // needs patch
+  // { SU,     XK_x,   incrgaps, {.i = -3 } }, // needs patch
+
+  // Tags Navigation
   TK(     XK_1,                        0)
   TK(     XK_2,                        1)
   TK(     XK_3,                        2)
@@ -95,17 +139,17 @@ static Key keys[] = {
 // Button definitions:::::::::::::::::::::::::::::::::::::::::::
 
 static Button buttons[] = {
-  /* click                event mask      button          function        argument */
-  { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-  { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-  { ClkWinTitle,          0,              Button2,        zoom,           {0} },
-  { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-  { ClkClientWin,         SU,         Button1,        movemouse,      {0} },
-  { ClkClientWin,         SU,         Button2,        togglefloating, {0} },
-  { ClkClientWin,         SU,         Button3,        resizemouse,    {0} },
-  { ClkTagBar,            0,              Button1,        view,           {0} },
-  { ClkTagBar,            0,              Button3,        toggleview,     {0} },
-  { ClkTagBar,            SU,         Button1,        tag,            {0} },
-  { ClkTagBar,            SU,         Button3,        toggletag,      {0} },
+  /* click          event mask button    function        argument */
+  { ClkLtSymbol,    0,         Button1,  setlayout,      {0} },
+  { ClkLtSymbol,    0,         Button3,  setlayout,      {.v = &layouts[2]} },
+  { ClkWinTitle,    0,         Button2,  zoom,           {0} },
+  { ClkStatusText,  0,         Button2,  spawn,          {.v = termcmd } },
+  { ClkClientWin,   SU,        Button1,  movemouse,      {0} },
+  { ClkClientWin,   SU,        Button2,  togglefloating, {0} },
+  { ClkClientWin,   SU,        Button3,  resizemouse,    {0} },
+  { ClkTagBar,      0,         Button1,  view,           {0} },
+  { ClkTagBar,      0,         Button3,  toggleview,     {0} },
+  { ClkTagBar,      SU,        Button1,  tag,            {0} },
+  { ClkTagBar,      SU,        Button3,  toggletag,      {0} },
 };
 
