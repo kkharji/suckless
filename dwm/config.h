@@ -13,7 +13,7 @@
 
 // Appearance::::::::::::::::::::::::::::::::::::::::::::::::::
 static const int showbar            = 1; // Bar? 
-static const int topbar             = 0; // Top?
+static const int topbar             = 1; // Top?
 static const unsigned int borderpx  = 3; // Border
 static const unsigned int snap      = 32; // Snap pixel
 static const char *colors[][3]      = { // Colors Setup
@@ -98,7 +98,7 @@ static Key keys[] = {
   // { SU,   XK_apostrophe,    togglescratch,  {.ui = 1} }, // require defination
   // Layout Management
   { SU,   XK_t,             setlayout,      {.v = &layouts[0]} },
-  { SU,   XK_f,             setlayout,      {.v = &layouts[1]} },
+  { SS,   XK_f,             setlayout,      {.v = &layouts[1]} },
   { SU,   XK_m,             setlayout,      {.v = &layouts[2]} },
   // Tag/Desktop Managment
   { SU,   XK_Tab,           view,           {0} },
@@ -110,7 +110,8 @@ static Key keys[] = {
   { SU,   XK_d,             spawn,          {.v = dmenucmd } },
   { SU,   XK_Return,        spawn,          {.v = termcmd } },
   { SU,   XK_w,             spawn,          SHCMD("$BROWSER") },
-  { SU,   XK_r,             spawn,          SHCMD("$FILE") },
+  { SU,   XK_r,             spawn,          SHCMD("st -e $FILE") },
+  { SU,   XK_f,             spawn,          SHCMD("st -e $FILE") },
   // Controls
   { SU,   XK_equal,         spawn,          {.v = volumeinc } },
   { SU,   XK_minus,         spawn,          {.v = volumedec } },
@@ -126,9 +127,9 @@ static Key keys[] = {
   { SU,   XK_q,             spawn,          {.v = exoptions } },
   { SU,   XK_BackSpace,     spawn,          {.v = exoptions } },
   { SU,   XK_backslash,     spawn,          {.v = deconfigs } },
-  { SC,   XK_d,             spawn,          {.v = displayse } },
-  { SC,   XK_s,             spawn,          {.v = displayon } },
-  { SC,   XK_m,             spawn,          {.v = mustuiapp } },
+  { SS,   XK_d,             spawn,          {.v = displayse } },
+  { SS,   XK_s,             spawn,          {.v = displayon } },
+  { SS,   XK_m,             spawn,          {.v = mustuiapp } },
   { 0,    XK_Print,         spawn,          SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },   
   { SH,   XK_Print,         spawn,          SHCMD("maimpick") },
   { SC,   XK_x,             spawn,          SHCMD("slock & xset dpms force off;mpcpause;pauseallmpv") },
