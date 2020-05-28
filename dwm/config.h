@@ -85,10 +85,6 @@ static const char *mustuiapp[] = { "st", "-e", "ncmpcpp", NULL };
   { MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
   { MOD, XK_s,     ACTION##stack, {.i = 0 } }, \
  
-//  { MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
-//  { MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
-//  { MOD, XK_s,     ACTION##stack, {.i = 0 } },
-
 // Mappings:::::::::::::::::::::::::::::::::::::::::::::::::::::
 static Key keys[] = {
   // Window Management
@@ -104,9 +100,9 @@ static Key keys[] = {
   { SU,   XK_h,             setmfact,       {.f = -0.05} },
   { SU,   XK_l,             setmfact,       {.f = +0.05} },
   { SU,   XK_c,             killclient,     {0} },
+	{ SS,   XK_g,             togglesticky,   {0} },
   { SU,   XK_space,         zoom,           {0} },
   { SS,   XK_space,         togglefloating, {0} },
-  // { SU,   XK_apostrophe,    togglescratch,  {.ui = 1} }, // require defination
   // Layout Management
   { SU,   XK_t,             setlayout,      {.v = &layouts[0]} },
   { SS,   XK_f,             setlayout,      {.v = &layouts[1]} },
@@ -134,7 +130,7 @@ static Key keys[] = {
   { SS,   XK_bracketleft,   spawn,          {.v = musfastbb } },
   { SU,   XK_period,        spawn,          {.v = musgonext } },
   { SU,   XK_comma,         spawn,          {.v = musgoprev } },
-  // { SU,   XK_q,             spawn,          {.v = exoptions } },
+  { SU,   XK_q,             spawn,          {.v = exoptions } },
   { SU,   XK_BackSpace,     spawn,          {.v = exoptions } },
   { SU,   XK_backslash,     spawn,          {.v = deconfigs } },
   { SS,   XK_d,             spawn,          {.v = displayse } },
