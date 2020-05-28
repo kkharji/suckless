@@ -29,3 +29,4 @@ Tryout
 This a few patches that are intersting, and may worth trying in the future:
 
 - https://dwm.suckless.org/patches/statuscmd/
+- https://dwm.suckless.org/patches/xrdb/ ; this one is intersting, and with compination with color bar, it may just be what I need.

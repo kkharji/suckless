@@ -16,6 +16,11 @@ static const int showbar            = 1; // Bar?
 static const int topbar             = 1; // Top?
 static const unsigned int borderpx  = 3; // Border
 static const unsigned int snap      = 32; // Snap pixel
+static const unsigned int gappih    = 10; // horiz inner gap between windows */
+static const unsigned int gappiv    = 10; // vert inner gap between windows */
+static const unsigned int gappoh    = 10; // horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 10; // vert outer gap between windows and screen edge */
+static const int smartgaps          = 0;  // 1 means no outer gap when there is only one window */
 static const char *colors[][3]      = { // Colors Setup
   //                    fg        bg        border
   [SchemeNorm]      = { col_fg,   col_bg,   col_bg },
@@ -83,64 +88,62 @@ static const char *mustuiapp[] = { "st", "-e", "ncmpcpp", NULL };
 #define STACKKEYS(MOD,ACTION) \
   { MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
   { MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
-  { MOD, XK_s,     ACTION##stack, {.i = 0 } }, \
+  { MOD, XK_Escape,     ACTION##stack, {.i = 0 } }, \
  
 // Mappings:::::::::::::::::::::::::::::::::::::::::::::::::::::
 static Key keys[] = {
   // Window Management
-  STACKKEYS(SU,                          focus)
-  STACKKEYS(SS,                           push)
-  { SU,   XK_b,             togglebar,      {0} },
-  // { SU,   XK_j,             focusstack,     {.i = +1 } },
-  // { SS,   XK_j,             movestack,      {.i = +1 } },
-  // { SU,   XK_k,             focusstack,     {.i = -1 } },
-  // { SS,   XK_k,             movestack,      {.i = -1 } },
-  { SU,   XK_o,             incnmaster,     {.i = +1 } },
-  { SS,   XK_o,             incnmaster,     {.i = -1 } },
-  { SU,   XK_h,             setmfact,       {.f = -0.05} },
-  { SU,   XK_l,             setmfact,       {.f = +0.05} },
-  { SU,   XK_c,             killclient,     {0} },
-	{ SS,   XK_g,             togglesticky,   {0} },
-  { SU,   XK_space,         zoom,           {0} },
-  { SS,   XK_space,         togglefloating, {0} },
-  // Layout Management
-  { SU,   XK_t,             setlayout,      {.v = &layouts[0]} },
-  { SS,   XK_f,             setlayout,      {.v = &layouts[1]} },
-  { SU,   XK_m,             setlayout,      {.v = &layouts[2]} },
-  // Tag/Desktop Managment
-  { SU,   XK_Tab,           view,           {0} },
-  { SU,   XK_0,             view,           {.ui = ~0 } },
-  // { SU,   XK_g,             shiftview,      { .i = -1 } }, // require defination
-  // { SU,   XK_semicolon,     shiftview,      { .i = 1 } }, // require defination
-  { SS,   XK_0,             tag,            {.ui = ~0 } },
-  // Spawns
-  { SU,   XK_d,             spawn,          {.v = dmenucmd } },
-  { SU,   XK_Return,        spawn,          {.v = termcmd } },
-  { SU,   XK_w,             spawn,          SHCMD("$BROWSER") },
-  { SU,   XK_r,             spawn,          SHCMD("st -e $FILE") },
-  // Controls
-  { SU,   XK_equal,         spawn,          {.v = volumeinc } },
-  { SU,   XK_minus,         spawn,          {.v = volumedec } },
-  { SS,   XK_equal,         spawn,          {.v = brightinc } },
-  { SS,   XK_minus,         spawn,          {.v = brightdec } },
-  { SU,   XK_p,             spawn,          {.v = mustoggle } },
-  { SU,   XK_bracketright,  spawn,          {.v = musfastfo } },
-  { SS,   XK_bracketright,  spawn,          {.v = musfastff } },
-  { SU,   XK_bracketleft,   spawn,          {.v = musfastba } },
-  { SS,   XK_bracketleft,   spawn,          {.v = musfastbb } },
-  { SU,   XK_period,        spawn,          {.v = musgonext } },
-  { SU,   XK_comma,         spawn,          {.v = musgoprev } },
-  { SU,   XK_q,             spawn,          {.v = exoptions } },
-  { SU,   XK_BackSpace,     spawn,          {.v = exoptions } },
-  { SU,   XK_backslash,     spawn,          {.v = deconfigs } },
-  { SS,   XK_d,             spawn,          {.v = displayse } },
-  { SS,   XK_s,             spawn,          {.v = displayon } },
-  { SS,   XK_m,             spawn,          {.v = mustuiapp } },
-  { 0,    XK_Print,         spawn,          SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },   
-  { SH,   XK_Print,         spawn,          SHCMD("maimpick") },
-  { SC,   XK_x,             spawn,          SHCMD("slock & xset dpms force off;mpcpause;pauseallmpv") },
-  // { SU,     XK_z,   incrgaps, {.i = +3 } }, // needs patch
-  // { SU,     XK_x,   incrgaps, {.i = -3 } }, // needs patch
+  STACKKEYS(SU, focus)
+  STACKKEYS(SS, push)
+  { SU,   XK_b,             togglebar,        {0} },
+  { SU,   XK_o,             incnmaster,       {.i = +1 } },
+  { SS,   XK_o,             incnmaster,       {.i = -1 } },
+  { SU,   XK_h,             setmfact,         {.f = -0.05} },
+  { SU,   XK_l,             setmfact,         {.f = +0.05} },
+  { SU,   XK_c,             killclient,       {0} },
+  { SU,   XK_s,             togglesticky,     {0} },
+  { SU,   XK_space,         zoom,             {0} },
+  { SS,   XK_space,         togglefloating,   {0} },
+  // Layout Management                        
+  { SU,   XK_t,             setlayout,        {.v = &layouts[0]} },
+  { SS,   XK_f,             setlayout,        {.v = &layouts[1]} },
+  { SU,   XK_m,             setlayout,        {.v = &layouts[2]} },
+  { SS,   XK_z,             incrogaps,        {.i = +5 } },
+  { SU,   XK_z,             incrogaps,        {.i = -5 } },
+  { SS,   XK_x,             incrigaps,        {.i = +5 } },
+  { SU,   XK_x,             incrigaps,        {.i = -5 } },
+  // Tag/Desktop Managment                    
+  { SU,   XK_Tab,           view,             {0} },
+  { SU,   XK_0,             view,             {.ui = ~0 } },
+  { SU,   XK_semicolon,     shiftviewclients, { .i = +1 } },
+  { SU,   XK_g,             shiftviewclients, { .i = -1 } },
+  { SS,   XK_0,             tag,              {.ui = ~0 } },
+  // Spawns                                   
+  { SU,   XK_d,             spawn,            {.v = dmenucmd } },
+  { SU,   XK_Return,        spawn,            {.v = termcmd } },
+  { SU,   XK_w,             spawn,            SHCMD("$BROWSER") },
+  { SU,   XK_r,             spawn,            SHCMD("st -e $FILE") },
+  // Controls                                 
+  { SU,   XK_equal,         spawn,            {.v = volumeinc } },
+  { SU,   XK_minus,         spawn,            {.v = volumedec } },
+  { SS,   XK_equal,         spawn,            {.v = brightinc } },
+  { SS,   XK_minus,         spawn,            {.v = brightdec } },
+  { SU,   XK_p,             spawn,            {.v = mustoggle } },
+  { SU,   XK_bracketright,  spawn,            {.v = musfastfo } },
+  { SS,   XK_bracketright,  spawn,            {.v = musfastff } },
+  { SU,   XK_bracketleft,   spawn,            {.v = musfastba } },
+  { SS,   XK_bracketleft,   spawn,            {.v = musfastbb } },
+  { SU,   XK_period,        spawn,            {.v = musgonext } },
+  { SU,   XK_comma,         spawn,            {.v = musgoprev } },
+  { SU,   XK_q,             spawn,            {.v = exoptions } },
+  { SU,   XK_BackSpace,     spawn,            {.v = exoptions } },
+  { SU,   XK_backslash,     spawn,            {.v = deconfigs } },
+  { SU,   XK_F3,            spawn,            {.v = displayse } },
+  { SU,   XK_F4,            spawn,            {.v = displayon } },
+  { SS,   XK_m,             spawn,            {.v = mustuiapp } },
+  { 0,    XK_Print,         spawn,            SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },   
+  { SH,   XK_Print,         spawn,            SHCMD("maimpick") },
+  { SC,   XK_x,             spawn,            SHCMD("slock & xset dpms force off;mpcpause;pauseallmpv") },
 
   // Tags Navigation
   TK(     XK_1,                        0)
