@@ -23,6 +23,14 @@ static unsigned int rows = 24;
 #include "../vars.h" 
 #include "../scheme.h"
 
+// Color Options:::::::::::::::::::::::::::::::::::::::::::::::
+unsigned int defaultitalic = 7;
+unsigned int defaultunderline = 7;
+unsigned int defaultfg = 7;
+unsigned int defaultbg = 0;
+static unsigned int defaultcs = 12;
+static unsigned int defaultrcs = 0;
+
 // Custom Commands:::::::::::::::::::::::::::::::::::::::::::::
 static char *copyoutput[] = { "/bin/sh", "-c", 
   "sed 's/ssh:\\/\\///g' | st-copyout", "externalpipe", NULL };
@@ -63,10 +71,10 @@ static Shortcut shortcuts[] = {
   { CS,  XK_J,      kscrolldown,      {.i = -1} },
   // Custom                           
   { CS,  XK_O,      externalpipe,     {.v = copyoutput } },
-  { CS,  XK_L,      externalpipe,     {.v = openurl } },
+  { CS,  XK_U,      externalpipe,     {.v = openurl } },
   { CS,  XK_Y,      externalpipe,     {.v = copyurl } },
   { AL,  XK_o,      externalpipe,     {.v = copyoutput } },
-  { AL,  XK_l,      externalpipe,     {.v = openurl } },
+  { AL,  XK_u,      externalpipe,     {.v = openurl } },
   { AL,  XK_Escape, keyboard_select,  { 0 } },
   { AL,  XK_y,      externalpipe,     {.v = copyurl } },
 };
