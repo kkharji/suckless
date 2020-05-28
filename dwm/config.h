@@ -8,6 +8,7 @@
 // Imports:::::::::::::::::::::::::::::::::::::::::::::::::::::
 #include "../vars.h" 
 #include "../scheme.h"
+#include "movestack.c"
 #include <X11/XF86keysym.h>
 
 // Appearance::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -84,7 +85,9 @@ static Key keys[] = {
   // Window Management
   { SU,   XK_b,             togglebar,      {0} },
   { SU,   XK_j,             focusstack,     {.i = +1 } },
+  { SS,   XK_j,             movestack,      {.i = +1 } },
   { SU,   XK_k,             focusstack,     {.i = -1 } },
+  { SS,   XK_k,             movestack,      {.i = -1 } },
   { SU,   XK_o,             incnmaster,     {.i = +1 } },
   { SS,   XK_o,             incnmaster,     {.i = -1 } },
   { SU,   XK_h,             setmfact,       {.f = -0.05} },
