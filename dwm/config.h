@@ -80,14 +80,25 @@ static const char *displayse[] = { "diselect", NULL };
 static const char *displayon[] = { "disone", NULL };
 static const char *mustuiapp[] = { "st", "-e", "ncmpcpp", NULL };
 
+#define STACKKEYS(MOD,ACTION) \
+  { MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
+  { MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
+  { MOD, XK_s,     ACTION##stack, {.i = 0 } }, \
+ 
+//  { MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
+//  { MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
+//  { MOD, XK_s,     ACTION##stack, {.i = 0 } },
+
 // Mappings:::::::::::::::::::::::::::::::::::::::::::::::::::::
 static Key keys[] = {
   // Window Management
+  STACKKEYS(SU,                          focus)
+  STACKKEYS(SS,                           push)
   { SU,   XK_b,             togglebar,      {0} },
-  { SU,   XK_j,             focusstack,     {.i = +1 } },
-  { SS,   XK_j,             movestack,      {.i = +1 } },
-  { SU,   XK_k,             focusstack,     {.i = -1 } },
-  { SS,   XK_k,             movestack,      {.i = -1 } },
+  // { SU,   XK_j,             focusstack,     {.i = +1 } },
+  // { SS,   XK_j,             movestack,      {.i = +1 } },
+  // { SU,   XK_k,             focusstack,     {.i = -1 } },
+  // { SS,   XK_k,             movestack,      {.i = -1 } },
   { SU,   XK_o,             incnmaster,     {.i = +1 } },
   { SS,   XK_o,             incnmaster,     {.i = -1 } },
   { SU,   XK_h,             setmfact,       {.f = -0.05} },
@@ -111,7 +122,6 @@ static Key keys[] = {
   { SU,   XK_Return,        spawn,          {.v = termcmd } },
   { SU,   XK_w,             spawn,          SHCMD("$BROWSER") },
   { SU,   XK_r,             spawn,          SHCMD("st -e $FILE") },
-  { SU,   XK_f,             spawn,          SHCMD("st -e $FILE") },
   // Controls
   { SU,   XK_equal,         spawn,          {.v = volumeinc } },
   { SU,   XK_minus,         spawn,          {.v = volumedec } },
@@ -124,7 +134,7 @@ static Key keys[] = {
   { SS,   XK_bracketleft,   spawn,          {.v = musfastbb } },
   { SU,   XK_period,        spawn,          {.v = musgonext } },
   { SU,   XK_comma,         spawn,          {.v = musgoprev } },
-  { SU,   XK_q,             spawn,          {.v = exoptions } },
+  // { SU,   XK_q,             spawn,          {.v = exoptions } },
   { SU,   XK_BackSpace,     spawn,          {.v = exoptions } },
   { SU,   XK_backslash,     spawn,          {.v = deconfigs } },
   { SS,   XK_d,             spawn,          {.v = displayse } },
