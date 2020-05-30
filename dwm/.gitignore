@@ -8,4 +8,9 @@ dwm.c.rej
 dwm.o
 patches/
 util.o
-
+config.mk.orig
+config.mk.rej
+drw.c.rej
+drw.h.orig
+drw.h.rej
+opicit.diff
