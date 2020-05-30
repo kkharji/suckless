@@ -8,7 +8,6 @@
 // Imports:::::::::::::::::::::::::::::::::::::::::::::::::::::
 #include "../vars.h" 
 #include "../scheme.h"
-#include "movestack.c"
 #include <X11/XF86keysym.h>
 
 // Appearance::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -21,6 +20,17 @@ static const unsigned int gappiv    = 10; // vert inner gap between windows */
 static const unsigned int gappoh    = 10; // horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 10; // vert outer gap between windows and screen edge */
 static const int smartgaps          = 0;  // 1 means no outer gap when there is only one window */
+
+static const char col_bg[]      = "#1d1f21";
+static const char col_fg[]      = "#e8e8e8";
+static const char col_theme[]   = "#e8e8e8";
+static const char col_red[]     = "#cc6666";
+static const char col_yellow[]  = "#f0c674";
+static const char col_green[]   = "#b5bd68";
+static const char col_blue[]    = "#81a2be";
+static const char col_cyan[]    = "#8abeb7";
+static const char col_magenta[] = "#c5c8c6";
+static const char col_gray[]    = "#969896"; 
 static const char *colors[][3]      = { // Colors Setup
   //                    fg        bg        border
   [SchemeNorm]      = { col_fg,   col_bg,   col_bg },
@@ -31,8 +41,8 @@ static const char *colors[][3]      = { // Colors Setup
   [SchemeInfoSel]   = { col_blue, col_bg,   col_bg  }, // infobar middle  selected
   [SchemeInfoNorm]  = { col_fg,   col_bg,   col_bg  }, // infobar middle  unselected 
 };
-static const char *tags[] = { "●", "●", "●", "●", "●", "●", "●", "●" };
-static const unsigned int baralpha = 0xd0;
+static const char *tags[] = { "1", "2", "3", "5", "6", "7", "8", "9" };
+static const unsigned int baralpha = 0x88;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3]      = {
   /*               fg      bg        border     */
@@ -41,7 +51,7 @@ static const unsigned int alphas[][3]      = {
 };
 
 // Rules:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-static const float mfact = 0.6;  // Master area size [0.05..0.95]
+static const float mfact = 0.55;  // Master area size [0.05..0.95]
 static const int nmaster = 1;  // Number of clients in master area
 static const int resizehints = 1; // respect size hints in tiled resizals ?
 static const Rule rules[] = {
