@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Desc: A dmenu wrapper script for system functions.
+# Req: Slock, hibernation enabled
+
+case "$(readlink -f /sbin/init)" in
+	*runit*) hib="sudo -A zzz" ;;
+	*openrc*) reb="sudo -A openrc-shutdown -r"; shut="sudo -A openrc-shutdown -p" ;;
+esac
+
+cmds="\
+   Lock		slock
+﫻   Kill dwm 	kill -TERM $(pidof -s dwm)
+   Renew dwm 	kill -HUP $(pidof -s dwm)
+鈴   Hibernate 	${hib:-sudo -A systemctl suspend-then-hibernate}
+   Reboot	${reb:-sudo -A reboot}
+襤   Shutdown	${shut:-sudo -A shutdown -h now}
+   Display	c2display
+   Mount	omount
+   Unmount	oumount
+   Change TUI scheme	c2envscheme
+"
+
+choice="$(echo "$cmds" | cut -d'	' -f 1 | dmenu -i)" || exit 1
+
+`echo "$cmds" | grep "^$choice	" | cut -d '	' -f2-`
