@@ -1,0 +1,55 @@
+#!/bin/bash
+repo="$HOME/code/suckless"
+stp="$repo/st"
+dwmp="$repo/dwm"
+dmenup="$repo/dmenu"
+tabedp="$repo/tabbed"
+colorp="$repo/colors"
+schemep="$repo/scheme.h"
+
+rebuild() {
+  cd $1; sudo make clean install
+}
+
+changescheme() {
+  cat $colorp/$1.h > $HOME/code/suckless/scheme.h;
+  cat ~/.config/nvim/colors/$1.vim > $HOME/.config/nvim/bin/scheme;
+  cat ~/.config/xres/$1.h > ~/.config/xres/scheme.x
+  xrdb ~/.config/Xresources                                                                                 ~ 
+  rebuild $dwmp;
+  kill -HUP $(pidof -s dwm)
+}
+
+main () {
+
+# Provide options
+select color in "tomorrow" "gruvbox" "onedark" "ashes" "palenight" "mayhem" "light1"
+do
+if [ "$color" == "tomorrow" ]; then
+  echo -e "Changing to $color colorscheme"
+  changescheme $color
+
+elif [ "$color" == "gruvbox" ]; then 
+  echo -e "Changing to $color colorscheme"
+  changescheme $color
+
+elif [ "$color" == "onedark" ]; then 
+  echo -e "Changing to $color colorscheme"
+  changescheme $color
+
+elif [ "$color" == "ashes" ]; then 
+  echo -e "Changing to $color colorscheme"
+  changescheme $color
+
+elif [ "$color" == "palenight" ]; then 
+  echo -e "Changing to $color colorscheme"
+  changescheme $color
+elif [ "$color" == "mayhem" ]; then 
+  echo -e "Changing to $color colorscheme"
+  changescheme $color
+elif [ "$color" == "light1" ]; then 
+  echo -e "Changing to $color colorscheme"
+  changescheme $color
+fi
+done
+}; main; exit
