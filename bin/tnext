@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Write/remove a task to do later.
+#
+# Select an existing entry to remove it from the file, or type a new entry to
+# add it.
+#
+
+file="$HOME/Dotfiles/share/todo"
+touch "$file"
+height=$(wc -l "$file" | awk '{print $1}')
+prompt=""
+
+# TODO: Make style global
+cmd=$(dmenu -fn 'Hack Nerd Font:pixelsize=13' -nb '#181818' -nf '#bbbbbb' -sb '#181818' -sf '#f0f0f0' -l "$height" -p "$prompt" "$@" < "$file")
+while [ -n "$cmd" ]; do
+ 	if grep -q "^$cmd\$" "$file"; then
+		grep -v "^$cmd\$" "$file" > "$file.$$"
+		mv "$file.$$" "$file"
+        height=$(( height - 1 ))
+ 	else
+		echo "$cmd" >> "$file"
+		height=$(( height + 1 ))
+ 	fi
+
+	cmd=$(dmenu -l "$height" -p "$prompt" "$@" < "$file")
+done
+
+exit 0

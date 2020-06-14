@@ -1,0 +1,38 @@
+#!/bin/bash
+# A dmenu wrapper script for personal functions
+
+# bar
+# c2display
+# c2envscheme
+# dlink
+# dsearch
+# dwmc
+# editconfig
+# emojimlist
+# exp
+# initmenu
+# powermenu
+# prompt
+# refbar
+# screena
+# tnext
+# webmenu
+# winselect
+
+# This script launches a menu with submenus, this is a handelr for external scripts:
+
+cmds="\
+find		websearch
+next		tnext
+run		dmenu_run
+edit		editconfig
+power		powermenu
+display		c2display
+laptop		screena
+renew		kill -HUP $(pidof -s dwm)
+"
+
+choice="$(echo "$cmds" | cut -d'	' -f 1 | dmenu -i)" || exit 1
+
+`echo "$cmds" | grep "^$choice	" | cut -d '	' -f2-`
+

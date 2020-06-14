@@ -1,0 +1,3 @@
+#!/bin/sh
+# printf '%s %s%s\n' "$(date '+%a %I:%M %p [%u]')"
+printf "  $(date '+%B %d (%u-%U) |   %I:%M %p') "

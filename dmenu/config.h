@@ -57,7 +57,7 @@ static const char *colors[][2] =
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
 static unsigned int lines      = 9;
 #if LINE_HEIGHT_PATCH
-static unsigned int lineheight = 0;         /* -h option; minimum height of a menu line     */
+static unsigned int lineheight = 9;         /* -h option; minimum height of a menu line     */
 #endif // LINE_HEIGHT_PATCH
 #if NAVHISTORY_PATCH
 static unsigned int maxhist    = 15;

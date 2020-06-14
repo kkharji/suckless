@@ -12,18 +12,21 @@ rebuild() {
 }
 
 changescheme() {
-  cat $colorp/$1.h > $HOME/code/suckless/scheme.h;
+  # Change xresorueces color ( dmenu & st )
+  cat ~/.config/xres/$1.x > ~/.config/xres/scheme.x;
+  xrdb ~/.config/Xresources;
+  # Change vim colors
   cat ~/.config/nvim/colors/$1.vim > $HOME/.config/nvim/bin/scheme;
-  cat ~/.config/xres/$1.h > ~/.config/xres/scheme.x
-  xrdb ~/.config/Xresources                                                                                 ~ 
-  rebuild $dwmp;
-  kill -HUP $(pidof -s dwm)
+  # Change dmenu
+  # cat $colorp/$1.h > $HOME/code/suckless/scheme.h;
+  # rebuild $dwmp;
+  # kill -HUP $(pidof -s dwm)
 }
 
 main () {
 
 # Provide options
-select color in "tomorrow" "gruvbox" "onedark" "ashes" "palenight" "mayhem" "light1"
+select color in "tomorrow" "gruvbox" "onedark" "onedarkmm" "ashes" "palenight" "mayhem" "light1"
 do
 if [ "$color" == "tomorrow" ]; then
   echo -e "Changing to $color colorscheme"
@@ -34,6 +37,10 @@ elif [ "$color" == "gruvbox" ]; then
   changescheme $color
 
 elif [ "$color" == "onedark" ]; then 
+  echo -e "Changing to $color colorscheme"
+  changescheme $color
+
+elif [ "$color" == "onedarkmm" ]; then 
   echo -e "Changing to $color colorscheme"
   changescheme $color
 

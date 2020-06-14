@@ -23,7 +23,7 @@
   { SS,     KEY,      tag,            {.ui = 1 << TAG} },
 
 // Appearance::::::::::::::::::::::::::::::::::::::::::::::::::
-static const char *fonts[] = { "MesloLGSDZ Nerd Font:size=10:antialias=true" };
+static const char *fonts[] = { "MesloLGSDZ Nerd Font:size=8:antialias=true" };
 static const int showbar            = 1; // Bar? 
 static const int topbar             = 1; // Top?
 static const unsigned int borderpx  = 3; // Border
@@ -43,13 +43,13 @@ static const char *colors[][3]      = { // Colors Setup
   [SchemeInfoSel]   = { col_blue, col_bg,   col_bg  }, // infobar middle  selected
   [SchemeInfoNorm]  = { col_fg,   col_bg,   col_bg  }, // infobar middle  unselected 
 };
-static const char *tags[] = { "1", "2", "3", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5" };
 static const unsigned int baralpha = 0x88;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3]      = {
   /*               fg      bg        border     */
-  [SchemeNorm] = { OPAQUE, baralpha, borderalpha },
-  [SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+  [SchemeNorm] = { OPAQUE,  OPAQUE, OPAQUE },
+  [SchemeSel]  = { OPAQUE, OPAQUE, OPAQUE },
 };
 
 // Rules:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -113,7 +113,7 @@ static Key keys[] = {
   { SU,   XK_h,             setmfact,         {.f = -0.05} },
   { SU,   XK_l,             setmfact,         {.f = +0.05} },
   { SU,   XK_c,             killclient,       {0} },
-  { SU,   XK_s,             togglesticky,     {0} },
+  { SU,   XK_a,             togglesticky,     {0} },
   { SU,   XK_space,         zoom,             {0} },
   { SS,   XK_space,         togglefloating,   {0} },
   // Layout Management                        
@@ -131,9 +131,9 @@ static Key keys[] = {
   { SU,   XK_g,             shiftviewclients, { .i = -1 } },
   { SS,   XK_0,             tag,              {.ui = ~0 } },
   // Spawns                                   
-  { SU,   XK_d,             spawn,            {.v = dmenucmd } },
-  { SU,   XK_t,             spawn,            {.v = termcmd } },
-  { SU,   XK_w,             spawn,            SHCMD("$BROWSER") },
+  // { SU,   XK_d,             spawn,            {.v = dmenucmd } },
+  // { SU,   XK_t,             spawn,            {.v = termcmd } },
+  // { SU,   XK_w,             spawn,            SHCMD("$BROWSER") },
   // { SU,   XK_r,             spawn,            SHCMD("st -e $FILE") },
   // Controls                                 
 // { SU,   XK_equal,         spawn,            {.v = volumeinc } },

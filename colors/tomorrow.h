@@ -1,0 +1,10 @@
+static const char col_bg[]      = "#1d1f21";
+static const char col_fg[]      = "#e8e8e8";
+static const char col_theme[]   = "#e8e8e8";
+static const char col_red[]     = "#cc6666";
+static const char col_yellow[]  = "#f0c674";
+static const char col_green[]   = "#b5bd68";
+static const char col_blue[]    = "#81a2be";
+static const char col_cyan[]    = "#8abeb7";
+static const char col_magenta[] = "#c5c8c6";
+static const char col_gray[]    = "#969896"; 

@@ -40,7 +40,7 @@
 /* This patch causes dmenu to print out the current text each time a key is pressed.
  * https://tools.suckless.org/dmenu/patches/incremental/
  */
-#define INCREMENTAL_PATCH 0
+#define INCREMENTAL_PATCH 1
 
 /* This patch adds an option to provide preselected text.
  * https://tools.suckless.org/dmenu/patches/initialtext/
@@ -116,7 +116,7 @@
 /* This patch prevents dmenu from indenting items at the same level as the prompt length.
  * https://tools.suckless.org/dmenu/patches/vertfull/
  */
-#define VERTFULL_PATCH 0
+#define VERTFULL_PATCH 1
 
 /* Adds extended window manager hints such as _NET_WM_WINDOW_TYPE and _NET_WM_WINDOW_TYPE_DOCK.
  * https://github.com/Baitinq/dmenu/blob/master/patches/dmenu-wm_type.diff

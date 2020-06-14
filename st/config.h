@@ -5,6 +5,27 @@
 // repo: github.com/tamibam/suckless ::::::::::::::::::::::::::
 // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+// Font :::::::::::::::::::::::::::::::::::::::::::::::::::::::
+static char *font = "MesloLGSDZ Nerd Font:size=8:antialias=true"; // Sharp
+static char *font2[] = {"Hack Nerd Font Mono:size=8:antialias=true"};
+
+// Modifers Defination:::::::::::::::::::::::::::::::::::::::::
+#define AL Mod1Mask
+#define AN XK_ANY_MOD
+#define SU Mod4Mask
+#define SS (Mod4Mask | ShiftMask)
+#define SC (Mod4Mask | ControlMask)
+#define SH ShiftMask
+#define CT ControlMask
+#define CS (ControlMask | ShiftMask)
+#define TK(KEY,TAG) \
+  { SU,     KEY,      view,           {.ui = 1 << TAG} }, \
+  { SU|CT,  KEY,      toggleview,     {.ui = 1 << TAG} }, \
+  { SS,     KEY,      tag,            {.ui = 1 << TAG} },
+
+// BG Opacity :::::::::::::::::::::::::::::::::::::::::::::::::
+float alpha = 1;           
+
 // Border Size:::::::::::::::::::::::::::::::::::::::::::::::::
 static int borderpx = 6; 
 
@@ -19,17 +40,9 @@ static unsigned int actionfps = 30;
 // Columns and Rows numbers::::::::::::::::::::::::::::::::::::
 static unsigned int cols = 80;
 static unsigned int rows = 24;
+
 // Imports ::::::::::::::::::::::::::::::::::::::::::::::::::::
 #include "../vars.h" 
-#include "../scheme.h"
-
-// Color Options:::::::::::::::::::::::::::::::::::::::::::::::
-unsigned int defaultitalic = 7;
-unsigned int defaultunderline = 7;
-unsigned int defaultfg = 7;
-unsigned int defaultbg = 0;
-static unsigned int defaultcs = 12;
-static unsigned int defaultrcs = 0;
 
 // Custom Commands:::::::::::::::::::::::::::::::::::::::::::::
 static char *copyoutput[] = { "/bin/sh", "-c", 
@@ -58,17 +71,24 @@ static Shortcut shortcuts[] = {
   { CS,  XK_C,      clipcopy,         {.i =  0} },
   { AN,  Button2,   clippaste,        {.i =  0} },
   // Zooming                          
-  { AL,  XK_l,      zoom,             {.f = +1} },
-  { AL,  XK_h,      zoom,             {.f = -1} },
+  //
+  { AL,  XK_l,      kscrollup,        {.i = -1} },
+  { AL,  XK_h,      kscrolldown,      {.i = -1} },
+
+  { CS,  XK_L,      kscrollup,        {.i = -1} },
+  { CS,  XK_H,      kscrolldown,      {.i = -1} },
+
+  { AL,  XK_j,      zoom,             {.f = +2} },
+  { AL,  XK_k,      zoom,             {.f = -2} },
+
+
+  { CS,  XK_J,      zoom,             {.f = +2} },
+  { CS,  XK_K,      zoom,             {.f = -2} },
+
   { AL,  XK_r,      zoomreset,        {.f =  0} },
-  { CS,  XK_L,      zoom,             {.f = +1} },
-  { CS,  XK_H,      zoom,             {.f = -1} },
+
   { CS,  XK_R,      zoomreset,        {.f =  0} },
   // Scrolling                        
-  { AL,  XK_k,      kscrollup,        {.i = -1} },
-  { AL,  XK_j,      kscrolldown,      {.i = -1} },
-  { CS,  XK_K,      kscrollup,        {.i = -1} },
-  { CS,  XK_J,      kscrolldown,      {.i = -1} },
   // Custom                           
   { CS,  XK_O,      externalpipe,     {.v = copyoutput } },
   { CS,  XK_U,      externalpipe,     {.v = openurl } },
@@ -105,6 +125,76 @@ static double maxlatency = 33;
 // https://gitlab.com/gnachman/iterm2/-/wikis/synchronized-updates-spec
 // 
 static uint su_timeout = 200;
+
+// Theme Setup
+static const char *colorname[] = {
+  /* 8 normal colors */
+  [0] = "#1d1f21", /* black   */
+  [1] = "#cc6666", /* red     */
+  [2] = "#b5bd68", /* green   */
+  [3] = "#f0c674", /* yellow  */
+  [4] = "#81a2be", /* blue    */
+  [5] = "#b294bb", /* magenta */
+  [6] = "#8abeb7", /* cyan    */
+  [7] = "#c5c8c6", /* white   */
+
+  /* 8 bright colors */
+  [8]  = "#969896", /* black   */
+  [9]  = "#cc6666", /* red     */
+  [10] = "#b5bd68", /* green   */
+  [11] = "#f0c674", /* yellow  */
+  [12] = "#81a2be", /* blue    */
+  [13] = "#b294bb", /* magenta */
+  [14] = "#8abeb7", /* cyan    */
+  [15] = "#c5c8c6", /* white   */
+
+  /* special colors */
+  [256] = "#de935f", /* background */
+  [257] = "#a3685a", /* foreground */
+  [258] = "#282a2e", /* foreground */
+  [259] = "#373b41", /* foreground */
+  [260] = "#b4b7b4", /* foreground */
+  [261] = "#e0e0e0", /* foreground */
+};
+
+// Xresources preferences to load at startup
+
+ResourcePref resources[] = {
+		{ "font",         STRING,  &font },
+		{ "color0",       STRING,  &colorname[0] },
+		{ "color1",       STRING,  &colorname[1] },
+		{ "color2",       STRING,  &colorname[2] },
+		{ "color3",       STRING,  &colorname[3] },
+		{ "color4",       STRING,  &colorname[4] },
+		{ "color5",       STRING,  &colorname[5] },
+		{ "color6",       STRING,  &colorname[6] },
+		{ "color7",       STRING,  &colorname[7] },
+		{ "color8",       STRING,  &colorname[8] },
+		{ "color9",       STRING,  &colorname[9] },
+		{ "color10",      STRING,  &colorname[10] },
+		{ "color11",      STRING,  &colorname[11] },
+		{ "color12",      STRING,  &colorname[12] },
+		{ "color13",      STRING,  &colorname[13] },
+		{ "color14",      STRING,  &colorname[14] },
+		{ "color15",      STRING,  &colorname[15] },
+		{ "background",   STRING,  &colorname[256] },
+		{ "foreground",   STRING,  &colorname[257] },
+		{ "cursorColor",  STRING,  &colorname[258] },
+		{ "termname",     STRING,  &termname },
+		{ "xfps",         INTEGER, &xfps },
+		{ "actionfps",    INTEGER, &actionfps },
+		{ "tabspaces",    INTEGER, &tabspaces },
+		{ "borderpx",     INTEGER, &borderpx },
+};
+
+
+// Color Options:::::::::::::::::::::::::::::::::::::::::::::::
+unsigned int defaultitalic = 7;
+unsigned int defaultunderline = 7;
+unsigned int defaultfg = 7;
+unsigned int defaultbg = 0;
+static unsigned int defaultcs = 12;
+static unsigned int defaultrcs = 0;
 
 
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
